@@ -1,0 +1,54 @@
+.backdrop{
+	filter: grayscale(100%) blur(4px);
+	position: sticky;
+	z-index: -100;
+	width: 100%;
+	height: 70%;
+}
+
+.logo-container{
+	margin-top: -400px;
+}
+
+.logo{
+	width: 200px;
+	height: 200px;
+	filter: invert(100%);
+	margin-top: -20px;
+}
+
+.header{
+	display: inline-block;
+}
+
+.links{
+	margin-left: 75%; 
+	color: white;
+}
+
+.welcome{
+	color: white;
+	text-shadow: 2px 2px black;
+	margin-top: 10px;
+}
+
+.add-info{
+	text-shadow: 1px 1px gray;
+	color:black;
+	font-size: 30px;
+}
+
+.admin-logo-container{
+	margin-top: -120px;
+	position: sticky;
+	z-index: -10;
+}
+
+.admin-logo{
+	width: 600px; 
+	height: 600px;
+}
+
+.button-container{
+	margin-top: -200px;
+}
