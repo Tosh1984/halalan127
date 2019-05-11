@@ -23,6 +23,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 	mysqli_query($link, $querystr);
     echo "<h1>Election switched to disabled.</h1>" . "\n";
+    header("Location: index.php");
     exit();
 }
 
@@ -39,7 +40,7 @@ if($id = $_GET['id']){
 $record_exists = false;
 if($id != ""){
     //check here if record id matches and exists and populate it
-    //check if id exists in the db 
+    //check if id exists in the db
     //SELECT subelection_authorized_vblocks.id, subelection_authorized_vblocks.authorized_voter_block_id, voter_block.name from subelection_authorized_vblocks INNER JOIN voter_block ON subelection_authorized_vblocks.authorized_voter_block_id=voter_block.id WHERE subelection_id=" . $id . " ORDER BY subelection_authorized_vblocks.id desc;"
     if($id_match_result = mysqli_query($link, "SELECT * from election WHERE id=" . $id . ";")){
         $row_cnt = mysqli_num_rows($id_match_result);
