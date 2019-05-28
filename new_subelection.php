@@ -71,7 +71,7 @@ $result = mysqli_fetch_assoc(mysqli_query($link, $sel_query));
         <div align="center"> <h1 class="py-2 display-2 welcome animated slideInUp"> Add sub-election to <strong><?php echo $result["name"] ?></strong> </h1> </div> <br>
         <div align="center" style="background-color: rgba(255, 255, 255, 0.5); width:50%; margin-left: 25%; border-radius: 10px" class="p-2 shadow animated slideInUp">
             <br>
-            <form action="new_subelection.php" method="post">
+            <form action="new_subelection.php?id=<?php echo $id; ?>" method="post">
             <!-- Select election to add to: <select name="election_id">
             <?php
             $count=0;
