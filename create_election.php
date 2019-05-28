@@ -27,7 +27,8 @@
      //echo $querystr . "\n";
  
      mysqli_query($link, $querystr);
-     echo "<h1>Added to elections table.</h1>" . "\n";
+     //echo "<h1>Added to elections table.</h1>" . "\n";
+     header("Location: index.php");
      exit();
  }
 ?>

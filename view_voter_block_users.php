@@ -8,9 +8,9 @@ possible action: inport user to other voter block.
 */
 error_reporting(-1);
 ini_set('display_errors', 'On');
-echo "php init" . "\n";
+/*echo "php init" . "\n";
 var_dump($_SERVER);
-echo "\n";
+echo "\n";*/
 $link = mysqli_connect("localhost","root","","carl");
 mysqli_set_charset($link, "utf8");
 //error if not success
@@ -24,8 +24,8 @@ $name = "";
 $description = "";
 
 if($id = $_GET['id']){
-    echo "ID: " . $id . "\n";
-    echo "ID end \n";
+    //echo "ID: " . $id . "\n";
+    //echo "ID end \n";
     $id = (int)$id;
 }
 $record_exists = false;
@@ -56,22 +56,38 @@ if($id != ""){
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Election Detail</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--css file-->
+        <link rel = "stylesheet" href = "elections.css">
+
+        <!-- animate.css -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+        <title> Elections </title>
 </head>
-<body>
+<body style="text-align: center;">
+    <div align="left"><button class="btn btn-outline-primary" onclick="javascript:history.back()"> Back </button></div>
     <!-- display record and comfirm delete -->
-    <h1>Election "<?php echo $name; ?>" Detail</h1>
-    Election Name:
-    <?php echo $name; ?> <br>
-    Description:
-    <?php echo $description; ?> <br>
-    <h2>Sub-election list</h3>
-    <table width="100%" border="1" style="border-collapse:collapse;">
+    <h1 class="display-3">Voter block " <strong> <?php echo $name; ?> </strong>" Details</h1>
+    <h2>Description: <?php echo $description; ?> </h2>
+    <br><br><br>
+    <h2>Voter list</h2>
+    <table width="100%" border="1" class="table table-hover" style="border-collapse:collapse;">
         <thead>
             <tr>
-            <th><strong>User Name</strong></th>
+            <th><strong>First Name</strong></th>
+            <th><strong>Surname</strong></th>
+            <th><strong>Username</strong></th>
             <th><strong>Date of birth</strong></th>
             <th><strong>Address</strong></th>
             <th><strong>Contact Number</strong></th>
@@ -81,15 +97,29 @@ if($id != ""){
         <tbody>
         <?php
         $count=1;
-        $sel_query="SELECT voter_block_members.block_id, voter_block_members.user_id, users.name, users.date_of_birth, users.address, users.contact_number, users.id FROM voter_block_members INNER JOIN users ON voter_block_members.user_id=users.id WHERE voter_block_members.block_id='".$id."'";
+        $sel_query="SELECT voter_block_members.block_id, voter_block_members.user_id, users.name, users.surname, users.username, users.date_of_birth, users.address, users.contact_number, users.id FROM voter_block_members INNER JOIN users ON voter_block_members.user_id=users.id WHERE voter_block_members.block_id='".$id."'";
         $result = mysqli_query($link,$sel_query);
         while($row = mysqli_fetch_assoc($result)) { ?>
         <td align="center"><?php print $row["name"]; ?></td>
+        <td align="center"><?php print $row["surname"]; ?></td>
+        <td align="center"><?php print $row["username"]; ?></td>
         <td align="center"><?php print $row["date_of_birth"]; ?></td>
         <td align="center"><?php print $row["address"]; ?></td>
         <td align="center"><?php print $row["contact_number"]; ?></td>
-        <td align="center">
-        <a href="user_detail.php?id=<?php print $row["id"]; ?>">Add to other vblock</a>
+        <td align="center"> 
+            <form action="import_vblock.php" method="post">
+                <input type="hidden" name="user_id" value="<?php print $id; ?>">
+                <select name="block_id">
+                    <?php
+                    $counter=0;
+                    $options_query="Select voter_block.id, voter_block.name from voter_block ORDER BY id asc;";
+                    $options_result = mysqli_query($link,$options_query);
+                    while($row = mysqli_fetch_assoc($options_result)) { ?>
+                        <option id="<?php print $row["id"]; ?>" value="<?php print $row["id"]; ?>"><?php print $row["name"]; ?></option>
+                    <?php $counter++; } ?>    
+                </select> <br/>
+                <input type="submit" class="btn btn-primary" value="Add to other voting block">
+            </form>
         </td>
         </tr>
         <?php $count++; } ?>
