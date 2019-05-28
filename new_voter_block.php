@@ -16,52 +16,78 @@
  //    echo "Error! Only logged in users may add to cart." . "\n";
  //    exit();
  //}
- 
+
+$sel_query = "SELECT name FROM election WHERE id = " . (int)$_GET['id'];
+$result = mysqli_fetch_assoc(mysqli_query($link, $sel_query));
+
  //add product to cart
  if($_SERVER["REQUEST_METHOD"] == "POST"){
      echo "POST detected." . "\n";
      $name = mysqli_real_escape_string($link,$_POST['voter_block_name']);
      $description = mysqli_real_escape_string($link,$_POST['voter_block_description']);
      $election_id = mysqli_real_escape_string($link,$_POST['election_id']);
-     $querystr = "INSERT INTO voter_block(name, description , parent_election_id) VALUES('" . $name . "','" . $description . "','"  . $election_id . "')" ;
+     $querystr = "INSERT INTO voter_block(name, description , parent_election_id) VALUES('" . $name . "','" . $description . "','"  . (int)$election_id . "')" ;
  
      echo $querystr . "\n";
  
      mysqli_query($link, $querystr);
-     echo "<h1>Added voter block to subelection.</h1>" . "\n";
+     //echo "<h1>Added voter block to subelection.</h1>" . "\n";
+     header("Location: index.php");
      exit();
  }
 ?>
+
+<?php
+    /*$id = "";
+    if($id = $_GET['id']){
+        echo "ID: " . $id . "\n";
+        echo "ID end \n";
+        $id = (int)$id;
+    }*/
+    //$sel_query = "SELECT name FROM election WHERE id = " . (int)$_GET['id'];
+    //$result = mysqli_fetch_assoc(mysqli_query($link, $sel_query));
+    //echo $result["name"];
+?>
 <html>
     <head>
-        <title>Add voter block to election</title>
-        <link href="https://fonts.googleapis.com/css?family=Andada|Lato:900|Mrs+Sheppards|Open+Sans:800|Permanent+Marker|Staatliches" rel="stylesheet">
+        <link rel = "stylesheet" href = "elections.css">
+        <link rel="stylesheet" type="text/css" href="animate.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.5.3/dist/css/foundation.min.css" integrity="sha256-xpOKVlYXzQ3P03j397+jWFZLMBXLES3IiryeClgU5og= sha384-gP4DhqyoT9b1vaikoHi9XQ8If7UNLO73JFOOlQV1RATrA7D0O7TjJZifac6NwPps sha512-AKwIib1E+xDeXe0tCgbc9uSvPwVYl6Awj7xl0FoaPFostZHOuDQ1abnDNCYtxL/HWEnVOMrFyf91TDgLPi9pNg==" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.5.3/dist/js/foundation.min.js" integrity="sha256-/PFxCnsMh+nTuM0k3VJCRch1gwnCfKjaP8rJNq5SoBg= sha384-9ksAFjQjZnpqt6VtpjMjlp2S0qrGbcwF/rvrLUg2vciMhwc1UJJeAAOLuJ96w+Nj sha512-UMSn6RHqqJeJcIfV1eS2tPKCjzaHkU/KqgAnQ7Nzn0mLicFxaVhm9vq7zG5+0LALt15j1ljlg8Fp9PT1VGNmDw==" crossorigin="anonymous"></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <title>Halalan127 | Admin</title>
 
     </head>
-    <body style="background-color: #EEEEEE">
-        <div class="flex-container align-center" style="background-color: rgb(0,0,0,0.85)">
-            <h1 style="font-family: Staatliches; color: white">Add voter block to election</h1>
+    <body style="background-image: url('header rotate.jpg'); background-position: sticky; background-size: cover">
+        <div align="center"> <h1 class="py-2 display-2 welcome animated slideInUp"> Add new voter block to <strong><?php echo $result["name"] ?></strong> </h1> </div> <br>
+        <div align="center" style="background-color: rgba(255, 255, 255, 0.5); width:50%; margin-left: 25%; border-radius: 10px" class="p-2 shadow animated slideInUp">
+            <br>
+            <form action="new_voter_block.php" method="post">
+                <center>
+                    <br>
+                    <!-- <select name="election_id">
+                    <?php
+                    $count = 0;
+                    $sel_query = "SELECT * FROM election ORDER BY id asc";
+                    $result = mysqli_query($link, $sel_query);
+                    while($row = mysqli_fetch_assoc($result)) { ?>
+                    <option id="<?php print $row["id"]; ?>" value="<?php print $row["id"]; ?>"><?php print $row["name"]; ?></option>
+                    <?php $count++; } ?>    
+                    </select> <br/> -->
+                    
+                    <label> Voter block name: </label><input type="text" name="voter_block_name"> <br/>
+                    <label> Voter block description: </label><input type="text" name="voter_block_description"> <br/>
+                    <input type="hidden" name="election_id" value="<?php echo $_GET['id'] ?>"> <br>
+                    <h3><input type="submit" value="Add voter block" class="btn btn-primary"></h3>
+                </center>
+            </form>
         </div>
-        <form action="new_voter_block.php" method="post">
-            <center>
-                <br>
-                <label style="font-family: Staatliches; font-size: 2vw">Select election to add to: </label><select name="election_id">
-                <?php
-                $count = 0;
-                $sel_query = "SELECT * FROM election ORDER BY id asc";
-                $result = mysqli_query($link, $sel_query);
-                while($row = mysqli_fetch_assoc($result)) { ?>
-                <option id="<?php print $row["id"]; ?>" value="<?php print $row["id"]; ?>"><?php print $row["name"]; ?></option>
-                <?php $count++; } ?>    
-                </select> <br/>
-                <label style="font-family: Staatliches; font-size: 2vw"> Voter block name: </label><input type="text" name="voter_block_name"> <br/>
-                <label style="font-family: Staatliches; font-size: 2vw"> Voter block description: </label><input type="text" name="voter_block_description"> <br/>
-                <h3><input type="submit" value="Add voter block" style="font-family: Staatliches; color: black" onMouseOver="this.style.color='#dfb400'"
-        onMouseOut="this.style.color='black'"></h3>
-            </center>
-        </form>
     </body>
 </html>

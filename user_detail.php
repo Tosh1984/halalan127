@@ -10,9 +10,9 @@ The database handles the rest.
 //$_GET["name"]
 error_reporting(-1);
 ini_set('display_errors', 'On');
-echo "php init" . "\n";
+/*echo "php init" . "\n";
 var_dump($_SERVER);
-echo "\n";
+echo "\n";*/
 $link = mysqli_connect("localhost","root","","carl");
 mysqli_set_charset($link, "utf8");
 //error if not success
@@ -30,8 +30,8 @@ $contact_number = "";
 //vote count is calculated by SQL query and NOT stored.
 
 if($id = $_GET['id']){
-    echo "ID: " . $id . "\n";
-    echo "ID end \n";
+    /*echo "ID: " . $id . "\n";
+    echo "ID end \n";*/
     $id = (int)$id;
 }
 $record_exists = false;
@@ -63,36 +63,51 @@ if($id != ""){
 
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>Position Detail</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-    <!-- display record and comfirm delete -->
-    <h1>Position "<?php echo $name; ?>" Detail</h1>
-    Name:
-    <?php echo $name; ?> <br>
-    DOB:
-    <?php echo $date_of_birth; ?> <br>
-    Address:
-    <?php echo $address; ?> <br>
-    contact:
-    <?php echo $contact_number; ?> <br>
-   
-    <h2>Add to other voter block</h2>
-    <form action="import_vblock.php" method="post">
-        <input type="hidden" name="user_id" value="<?php print $id; ?>">
-        <select name="block_id">
-                <?php
-                $count=0;
-                $sel_query="Select voter_block.id, voter_block.name from voter_block ORDER BY id asc;";
-                $result = mysqli_query($link,$sel_query);
-                while($row = mysqli_fetch_assoc($result)) { ?>
-                <option id="<?php print $row["id"]; ?>" value="<?php print $row["id"]; ?>"><?php print $row["name"]; ?></option>
-                <?php $count++; } ?>    
-                </select> <br/>
-        <input type="submit" value="Add to other voting block">
-    </form>
-</body>
+    <head>
+            <!--css file-->
+            <link rel = "stylesheet" href = "elections.css">
+
+            <!-- animate.css -->
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+            <!-- Required meta tags -->
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+
+            <!-- Bootstrap CSS -->
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+            <title> Elections </title>
+    </head>
+    <body>
+        <!-- display record and comfirm delete -->
+        <h1>Voter <strong> <?php echo $name; ?> </strong> Details</h1>
+        Name:
+        <?php echo $name; ?> <br>
+        DOB:
+        <?php echo $date_of_birth; ?> <br>
+        Address:
+        <?php echo $address; ?> <br>
+        contact:
+        <?php echo $contact_number; ?> <br>
+       
+        <h2>Add to other voter block</h2>
+        <form action="import_vblock.php" method="post">
+            <input type="hidden" name="user_id" value="<?php print $id; ?>">
+            <select name="block_id">
+                    <?php
+                    $count=0;
+                    $sel_query="Select voter_block.id, voter_block.name from voter_block ORDER BY id asc;";
+                    $result = mysqli_query($link,$sel_query);
+                    while($row = mysqli_fetch_assoc($result)) { ?>
+                    <option id="<?php print $row["id"]; ?>" value="<?php print $row["id"]; ?>"><?php print $row["name"]; ?></option>
+                    <?php $count++; } ?>    
+                    </select> <br/>
+            <input type="submit" value="Add to other voting block">
+        </form>
+    </body>
 </html>

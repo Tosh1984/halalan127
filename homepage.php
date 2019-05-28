@@ -1,3 +1,87 @@
+<?php
+//setup db connection here
+//use php sessions to keep track of logins
+/*error_reporting(-1);
+ini_set('display_errors', 'On');
+echo "php init" . "\n";
+*/
+session_start();
+$link = mysqli_connect("localhost","root","","carl");
+//var_dump($_SESSION);
+
+// if(isset($_SESSION["admin-loggedin"]) && $_SESSION["admin-loggedin"] === true){
+//     echo "you are already logged in!";
+//     exit();
+// }
+
+// $link = mysqli_connect("localhost","root","","MP1v1");
+//error if not success
+// if(mysqli_connect_errno()){
+//     printf("Connect failed: %s\n", mysqli_connect_error());
+//     exit(); //quit if failed
+// }
+
+//check if this is a post request, if it is, add to db
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+	/*$sel_query = "SELECT name FROM users WHERE name = " . $_POST['username'];
+	$result = mysqli_fetch_assoc(mysqli_query($link, $sel_query));
+	$_SESSION["username"] = $result["name"];*/
+    //echo "POST detected." . "\n";
+	$username = $_POST['username'];
+	$password = $_POST['password'];
+    //check if email exists in the db already
+    if($username == "superadmin" && $password == "master4all!"){
+       // echo "credentials match! is registered!" . "\n";
+
+        // Store data in session variables
+        $_SESSION["admin-loggedin"] = true;
+
+        // Redirect user to welcome page
+       // echo "You are now logged in!" . "\n as " . "admin" . "\n";
+        header("Location: index.php");
+        exit();
+    }
+
+        /* if($username == "ttest" && $password == "she6a"){
+        	        $_SESSION["user-loggedin"] = true;
+        	                header("Location: user_homepage.php");
+exit(); */
+	$conn = mysqli_connect("localhost","root","","carl");
+	$result = mysqli_query($conn,"SELECT * FROM users where username = '$username' and password = '$password'")
+		or die("Failed!".mysqli_error());
+	$row = mysqli_fetch_array($result);
+	if ($row['username'] == $username && $row['password'] == $password ){
+		        $_SESSION["user-loggedin"] = true;
+		        header("Location: user_homepage.php");
+        exit();
+	} else {
+		header("Location: homepage.php");
+
+	}
+
+	/*$result = mysqli_query($link,"SELECT * FROM users WHERE username='" . $_POST["username"] . "' and password = '". $_POST["password"]."'");
+	$count  = mysqli_num_rows($result);
+	if($count==0) {
+		$message = "Invalid Username or Password!";
+	} else {
+		$message = "You are successfully authenticated!";
+	}
+} */
+
+
+
+   /* else if($username == $result["name"] && $password == $result["name"]){
+    	header("Location: loginpage.php");
+    }*/
+    //else{
+        /*echo '<div class="alert alert-danger alert-dismissible fade show" style="width: 100%"> <strong>User does not exist</strong>.</div>';*/
+      //  header("Location: loginpage.php");
+        //echo "try again";
+    //} 
+}
+
+?>
+
 <html>
 	<head>
 		<!--css file-->
@@ -27,12 +111,12 @@
 				<div class="logo-container">
 					<div>
 						<div class="header"> 
-							<a href="index.php">
+							<a href="homepage.php">
 								<img src="elections trans.png" class="logo">
 							</a>
 						</div>
 						<div class="header links">
-							<a style="color: white" href="index.php"> home </a> | 
+							<a style="color: white" href="homepage.php"> home </a> | 
 							<a style="color: white" href="#loginModal" data-toggle="modal"> login </a>
 						</div>
 					</div>
@@ -77,23 +161,23 @@
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 		      		</div>
 			      	<div class="modal-body">
-			        	<form>
+			        	<form method="post">
 			        		<div class="input-group form-group">
 								<div class="input-group-prepend">
 									<span class="input-group-text"><i class="fas fa-user"></i></span>
 								</div>
-								<input type="text" class="form-control" placeholder="username">
+								<input type="text" name="username" class="form-control" placeholder="username">
 							</div>
 							<div class="input-group form-group">
 								<div class="input-group-prepend">
 									<span class="input-group-text"><i class="fas fa-key"></i></span>
 								</div>
-								<input type="password" class="form-control" placeholder="password">
+								<input type="password" name="password" class="form-control" placeholder="password">
 							</div>
 				    </div>
 			      	<div class="modal-footer">
 			        		<div class="form-group">
-								<a href="user_login.php"> <input type="submit" value="Login" class="btn btn-primary"> </a>
+								<!-- <a href="user_login.php"> --> <input type="submit" value="Login" class="btn btn-primary"> </a>
 							</div>
 				        </form>
 			      	</div>

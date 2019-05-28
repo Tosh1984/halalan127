@@ -1,9 +1,9 @@
 <?php
  error_reporting(-1);
  ini_set('display_errors', 'On');
- echo "php init" . "\n";
+/* echo "php init" . "\n";
  var_dump($_SERVER);
- echo "\n";
+ echo "\n";*/
  $link = mysqli_connect("localhost","root","","carl");
  //error if not success
  if(mysqli_connect_errno()){
@@ -29,8 +29,8 @@
      echo $querystr . "\n";
  
      mysqli_query($link, $querystr);
-     echo "<h1>Added candidate to position.</h1>" . "<br/>\n";
-     print '<a href="position_detail.php?id=' . $position_id . '">View subelection detail</a>';
+    /* echo "<h1>Added candidate to position.</h1>" . "<br/>\n";*/
+     header("Location:" . $_SERVER['HTTP_REFERER']);
      exit();
  }
 ?>

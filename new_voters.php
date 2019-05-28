@@ -61,6 +61,7 @@ if(mysqli_connect_errno()){
         <div class="col-md-6">
               <h3>Add entry:</h3>
               Name: <input type="text" id="namef"> <br>
+              Surname: <input type="text" id="surname"></div>
               Date of birth: <input type="date" id="dobf"> <br>
               Address: <input type="text" id="addrf"> <br>
                 Contact number: <input type="text" id="contactf"> <br>
@@ -70,10 +71,12 @@ if(mysqli_connect_errno()){
         <div class="col-md-6">
               <table id="MainTable" border = "1" align = "center">
                 <tr>
-                  <th><b>Name</b></th>
+                  <th><b>First name</b></th>
+                  <th><b>Surname</b></th>
                   <th><b>Date of birth</b></th>
                   <th><b>Address</b></th>
                         <th><b>Contact number</b></th>
+                  <th><b>Username</b>
                 </tr>
               </table>
         </div>
@@ -83,9 +86,11 @@ if(mysqli_connect_errno()){
 		function TestPopulate(){
 			//do validation here first
 			var nameField = document.getElementById("namef").value;
+      var surname = document.getElementById("surname").value;
 			var dob = document.getElementById("dobf").value;
 			var address = document.getElementById("addrf").value;
-            var contactNum = document.getElementById("contactf").value;
+      var contactNum = document.getElementById("contactf").value;
+      var username = nameField.charAt(0) + surname;
 			//alerts for debug
 			//alert(nameField.length);
 			//alert(studentNumField.length);
@@ -97,10 +102,14 @@ if(mysqli_connect_errno()){
             var cell2=row.insertCell(1);
             var cell3=row.insertCell(2);
             var cell4=row.insertCell(3);
+            var cell5=row.insertCell(4);
+            var cell6=row.insertCell(5);
             cell1.innerHTML = nameField;
-            cell2.innerHTML = dob;
-            cell3.innerHTML = address;
-            cell4.innerHTML = contactNum;
+            cell2.innerHTML = surname;
+            cell3.innerHTML = dob;
+            cell4.innerHTML = address;
+            cell5.innerHTML = contactNum;
+            cell6.innerHTML = username;
 		}
         function SubmitAsString(){
             var outString = "";
@@ -112,7 +121,7 @@ if(mysqli_connect_errno()){
                     //iterate through columns
                     //columns would be accessed using the "col" variable assigned in the for loop
                     outString = outString + col.innerText;
-                    if(j<3){
+                    if(j<5){
                         outString = outString + ",";
                     }
                 }  
