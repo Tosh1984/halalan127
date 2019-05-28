@@ -77,7 +77,7 @@ exit(); */
         /*echo '<div class="alert alert-danger alert-dismissible fade show" style="width: 100%"> <strong>User does not exist</strong>.</div>';*/
       //  header("Location: loginpage.php");
         //echo "try again";
-    //} 
+    //}
 }
 
 ?>
@@ -105,22 +105,19 @@ exit(); */
 	</head>
 
 	<body background="white">
-		<div>
+		<div class="container-fluid">
 			<div>
 				<img src="header rotate.jpg" class="backdrop">
 				<div class="logo-container">
 					<div>
-						<div class="header"> 
+						<div class="header">
 							<a href="homepage.php">
 								<img src="elections trans.png" class="logo">
 							</a>
 						</div>
-						<div class="header links">
-							<a style="color: white" href="homepage.php"> home </a> | 
-							<a style="color: white" href="#loginModal" data-toggle="modal"> login </a>
-						</div>
+
 					</div>
-					<div align="center"> 
+					<div align="center">
 						<h1 class="font-weight-bold display-3 welcome animated fadeIn"> EXERCISE YOUR RIGHT TO VOTE </h1>
 					</div>
 				</div>
@@ -145,6 +142,10 @@ exit(); */
 					<p>
 						Do you want to make a positive impact? Voting gives you that chance! Support the candidates and ballot measures that can help your community, state, and even the nation for the greater good. Make your voice heard in these elections.
 					</p>
+					<div class="btn-group">
+						<a class="btn btn-primary" style="" href="homepage.php"> HOME </a>
+						<a class="btn btn-primary" style="" href="#loginModal" data-toggle="modal"> LOGIN </a>
+					</div>
 				</div>
 			</div>
 			<div class="col-md-1"> </div>
@@ -177,8 +178,8 @@ exit(); */
 				    </div>
 			      	<div class="modal-footer">
 			        		<div class="form-group">
-								<!-- <a href="user_login.php"> --> <input type="submit" value="Login" class="btn btn-primary"> </a>
-							</div>
+										<a href="user_login.php"> <input type="submit" value="Login" class="btn btn-primary"> </a>
+									</div>
 				        </form>
 			      	</div>
 		    	</div>

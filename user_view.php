@@ -19,7 +19,7 @@ $link = mysqli_connect("localhost","root","","carl");
    header("Location: homepage.php");
   }
 
-  
+
 ?>
 
 <html>
@@ -70,30 +70,39 @@ $link = mysqli_connect("localhost","root","","carl");
                   </tr>
                 </thead>
                 <tbody>
-                  
-                  <?php
+
+                <?php
                   $count=1;
                   $sel_query="Select * from vote_results ORDER BY vote_count;";
                   $result = mysqli_query($link,$sel_query);
-                  while($row = mysqli_fetch_assoc($result)) { ?>
+                  // mysqli_fetch_assoc($result);
+                  if (!$result) {
+                    while($row = mysqli_fetch_assoc($result)) {
+                      echo '<td align="center"></td>';
+                      echo '<td align="center">';
+                      print $row["name"];
+                      echo '</td>';
+                      echo '<td align="center">';
+                      print $row["vote_count"];
+                      echo '</td>';
+                    }
+                    echo '</tr>';
+                    $count++;
 
-                    <td align="center">
-            
-                    </td>
-                    <td align="center"><?php print $row["name"]; ?></td>
-                    <td align="center"><?php print $row["vote_count"]; ?></td>
-                  }
+                    echo '</tbody>';
+                  echo '</table>';
+                } else {
+                  echo '<h3>No Results!</h3>';
+                }
 
-                </tr>
-                <?php $count++; } ?>
-                  </tbody>
-                </table>
+              ?>
 
-           
+
+
         </div>
       </div>
-      
-     
+
+
     </main>
 
 

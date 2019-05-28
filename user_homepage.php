@@ -50,7 +50,7 @@
     <main>
       <div class="container">
         <div align="center" class="">
-            <img src="elections trans.png" height ="400" width="500" margin-below="-100">
+            <img src="elections trans.png" height ="400" width="500">
         </div>
 
         <hr>
@@ -75,7 +75,7 @@
                   while($row = mysqli_fetch_assoc($result)) { ?>
 
                     <td align="center">
-            
+
                     </td>
                     <td align="center"><?php print $row["name"]; ?></td>
                     <td align="center"><?php print $row["description"]; ?></td>
@@ -94,8 +94,8 @@
             </table>
         </div>
       </div>
-      
-     
+
+
     </main>
 
 
