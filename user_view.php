@@ -53,7 +53,7 @@ $link = mysqli_connect("localhost","root","","carl");
     <main>
       <div class="container">
         <div align="center" class="">
-            <img src="elections trans.png" height ="400" width="500" margin-below="-100">
+            <img src="elections trans.png" class="" style="height:50vh; min-height:50%; object-fit:contain;">
         </div>
 
         <hr>
@@ -96,16 +96,9 @@ $link = mysqli_connect("localhost","root","","carl");
                 }
 
               ?>
-
-
-
         </div>
       </div>
-
-
     </main>
-
-
 
 
     <script type="text/javascript">
