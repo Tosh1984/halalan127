@@ -16,7 +16,13 @@
  //    echo "Error! Only logged in users may add to cart." . "\n";
  //    exit();
  //}
-
+ if($id = $_GET['id']){
+    /*
+    echo "ID: " . $id . "\n";
+    echo "ID end \n";
+    */
+    $id = (int)$id;
+}
 $sel_query = "SELECT name FROM election WHERE id = " . (int)$_GET['id'];
 $result = mysqli_fetch_assoc(mysqli_query($link, $sel_query));
  
